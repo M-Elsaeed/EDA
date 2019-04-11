@@ -2,32 +2,32 @@
 -- A => 1010
 -- B => 1011
 -- O => 1101
-library ieee;
-use ieee.std_logic_1164.all;
+-- library ieee;
+-- use ieee.std_logic_1164.all;
 entity dac is
 	port
 	(
-		reset    : in std_logic;
-		day_time : in std_logic;
-		code     : in std_logic_vector(3 downto 0);
-		door     : out std_logic;
-		alarm    : out std_logic;
-		clk      : in std_logic;
-		vdd      : in std_logic;
-		vss      : in std_logic
+		reset    : in bit;
+		day_time : in bit;
+		code     : in bit_vector(3 downto 0);
+		door     : out bit;
+		alarm    : out bit;
+		clk      : in bit;
+		vdd      : in bit;
+		vss      : in bit
 	);
 end dac;
 architecture dac_behav of dac is
 	type state is (start, rec_2, rec_6, rec_a, rec_0, rec_5);
-    signal current_state : state;
-    signal next_state    : state;
-    constant a : std_logic_vector(3 downto 0) := "1010";
-    constant b : std_logic_vector(3 downto 0) := "1011";
-    constant o : std_logic_vector(3 downto 0) := "1101";
+	signal current_state : state;
+	signal next_state    : state;
+	constant a           : bit_vector(3 downto 0) := "1010";
+	constant b           : bit_vector(3 downto 0) := "1011";
+	constant o           : bit_vector(3 downto 0) := "1101";
 begin
 	process (clk)
 	begin
-		if rising_edge (clk) then
+		if clk='1' and not clk'stable then
 			current_state <= next_state;
 		end if;
 	end process;
@@ -37,9 +37,9 @@ begin
 			next_state <= start;
 		else
 			case current_state is
-				when  start =>
+				when start =>
 					if day_time = '1' and code = o then
-						door       <= '0';
+						door       <= '1';
 						alarm      <= '0';
 						next_state <= rec_5;
 					elsif code = x"2" then
@@ -49,11 +49,11 @@ begin
 					else
 						door       <= '0';
 						alarm      <= '1';
-						next_state <= start;
+						next_state <= rec_5;
 					end if;
-				when  rec_2 =>
+				when rec_2 =>
 					if day_time = '1' and code = o then
-						door       <= '0';
+						door       <= '1';
 						alarm      <= '0';
 						next_state <= rec_5;
 					elsif code = x"6" then
@@ -63,11 +63,11 @@ begin
 					else
 						door       <= '0';
 						alarm      <= '1';
-						next_state <= start;
+						next_state <= rec_5;
 					end if;
-				when  rec_6 =>
+				when rec_6 =>
 					if day_time = '1' and code = o then
-						door       <= '0';
+						door       <= '1';
 						alarm      <= '0';
 						next_state <= rec_5;
 					elsif code = a then
@@ -77,11 +77,11 @@ begin
 					else
 						door       <= '0';
 						alarm      <= '1';
-						next_state <= start;
+						next_state <= rec_5;
 					end if;
-				when  rec_a =>
+				when rec_a =>
 					if day_time = '1' and code = o then
-						door       <= '0';
+						door       <= '1';
 						alarm      <= '0';
 						next_state <= rec_5;
 					elsif code = x"0" then
@@ -91,11 +91,11 @@ begin
 					else
 						door       <= '0';
 						alarm      <= '1';
-						next_state <= start;
+						next_state <= rec_5;
 					end if;
-				when  rec_0 =>
+				when rec_0 =>
 					if day_time = '1' and code = o then
-						door       <= '0';
+						door       <= '1';
 						alarm      <= '0';
 						next_state <= rec_5;
 					elsif code = x"5" then
@@ -105,18 +105,17 @@ begin
 					else
 						door       <= '0';
 						alarm      <= '1';
-						next_state <= start;
+						next_state <= rec_5;
 					end if;
-				when  rec_5 =>
-					door <= '1';
-					alarm <= '0';
-					next_state <= start;
-				when  others =>
+				when rec_5 =>
+					door       		<= '0';
+					alarm      		<= '0';
+					next_state 		<= start;
+				when others =>
 					assert false
-                    report "Invalid state"                    
+					report "Invalid state"
 						severity failure;
 			end case;
 		end if;
 	end process;
 end dac_behav;
-
