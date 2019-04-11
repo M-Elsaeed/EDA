@@ -14,13 +14,16 @@ entity dac is
 		alarm    : out std_logic;
 		clk      : in std_logic;
 		vdd      : in std_logic;
-		vss      : in std_logic;
+		vss      : in std_logic
 	);
 end dac;
 architecture dac_behav of dac is
 	type state is (start, rec_2, rec_6, rec_a, rec_0, rec_5);
-	signal current_state, next_state               : state;
-	constant a := "1010", b := "1011", o := "1101" : std_logic_vector;
+    signal current_state : state;
+    signal next_state    : state;
+    constant a : std_logic_vector(3 downto 0) := "1010";
+    constant b : std_logic_vector(3 downto 0) := "1011";
+    constant o : std_logic_vector(3 downto 0) := "1101";
 begin
 	process (clk)
 	begin
@@ -30,16 +33,16 @@ begin
 	end process;
 	process (current_state, reset, day_time, code)
 	begin
-		if reset = '1'then
+		if reset = '1' then
 			next_state <= start;
-		elsif
+		else
 			case current_state is
-				when => start
-					if d = '1' and code = o then
+				when  start =>
+					if day_time = '1' and code = o then
 						door       <= '0';
 						alarm      <= '0';
 						next_state <= rec_5;
-					elsif code = x"2"
+					elsif code = x"2" then
 						door       <= '0';
 						alarm      <= '0';
 						next_state <= rec_2;
@@ -48,12 +51,12 @@ begin
 						alarm      <= '1';
 						next_state <= start;
 					end if;
-				when => rec_2
-					if d = '1' and code = o then
+				when  rec_2 =>
+					if day_time = '1' and code = o then
 						door       <= '0';
 						alarm      <= '0';
 						next_state <= rec_5;
-					elsif code = x"6"
+					elsif code = x"6" then
 						door       <= '0';
 						alarm      <= '0';
 						next_state <= rec_6;
@@ -62,12 +65,12 @@ begin
 						alarm      <= '1';
 						next_state <= start;
 					end if;
-				when => rec_6
-					if d = '1' and code = o then
+				when  rec_6 =>
+					if day_time = '1' and code = o then
 						door       <= '0';
 						alarm      <= '0';
 						next_state <= rec_5;
-					elsif code = a
+					elsif code = a then
 						door       <= '0';
 						alarm      <= '0';
 						next_state <= rec_a;
@@ -76,12 +79,12 @@ begin
 						alarm      <= '1';
 						next_state <= start;
 					end if;
-				when => rec_a
-					if d = '1' and code = o then
+				when  rec_a =>
+					if day_time = '1' and code = o then
 						door       <= '0';
 						alarm      <= '0';
 						next_state <= rec_5;
-					elsif code = x"0"
+					elsif code = x"0" then
 						door       <= '0';
 						alarm      <= '0';
 						next_state <= rec_0;
@@ -90,12 +93,12 @@ begin
 						alarm      <= '1';
 						next_state <= start;
 					end if;
-				when => rec_0
-					if d = '1' and code = o then
+				when  rec_0 =>
+					if day_time = '1' and code = o then
 						door       <= '0';
 						alarm      <= '0';
 						next_state <= rec_5;
-					elsif code = x"5"
+					elsif code = x"5" then
 						door       <= '0';
 						alarm      <= '0';
 						next_state <= rec_5;
@@ -104,15 +107,16 @@ begin
 						alarm      <= '1';
 						next_state <= start;
 					end if;
-				when => rec_5
+				when  rec_5 =>
 					door <= '1';
-					alarm = '0';
+					alarm <= '0';
 					next_state <= start;
-				when => others
+				when  others =>
 					assert false
-					report 'invalid state'
+                    report "Invalid state"                    
 						severity failure;
 			end case;
 		end if;
 	end process;
 end dac_behav;
+
