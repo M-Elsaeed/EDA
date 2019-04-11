@@ -21,9 +21,9 @@ architecture dac_behav of dac is
 	type state is (start, rec_2, rec_6, rec_a, rec_0, rec_5);
 	signal current_state : state;
 	signal next_state    : state;
-	constant a           : bit_vector(3 downto 0) := "1010";
-	constant b           : bit_vector(3 downto 0) := "1011";
-	constant o           : bit_vector(3 downto 0) := "1101";
+	 constant a           : bit_vector(3 downto 0) := "1010";
+	 constant b           : bit_vector(3 downto 0) := "1011";
+	 constant o           : bit_vector(3 downto 0) := "1101";
 begin
 	process (clk)
 	begin
@@ -99,7 +99,7 @@ begin
 						alarm      <= '0';
 						next_state <= rec_5;
 					elsif code = x"5" then
-						door       <= '0';
+						door       <= '1';
 						alarm      <= '0';
 						next_state <= rec_5;
 					else
