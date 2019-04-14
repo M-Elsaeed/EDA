@@ -150,7 +150,7 @@ begin
 		report "Entering 2, 6, A, 0, 5 opens the door, but doesn't trigger the alarm"
 			severity error;
 
-		-- 15
+		-- 15		
 		wait for clk_period;
 		assert door = '0' and alarm = '0'
 		report "Waiting for a clock cycle, should reset both door and alarm, to zero"

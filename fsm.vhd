@@ -21,6 +21,9 @@ architecture dac_behav of dac is
 	constant a           : bit_vector(3 downto 0) := "1010";
 	constant b           : bit_vector(3 downto 0) := "1011";
 	constant o           : bit_vector(3 downto 0) := "1101";
+	--pragma current_state current_state
+    --pragma next_state next_state
+    --pragma clock clk
 begin
 	process (clk)
 	begin
