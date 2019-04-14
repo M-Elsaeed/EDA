@@ -123,7 +123,7 @@ begin
 		report "Entering 2, 6 neither opens the door, nor triggers the alarm"
 			severity error;
 
-		-- 13
+		-- 12
 		reset    <= '0';
 		day_time <= '1';
 		code     <= a;
@@ -132,7 +132,7 @@ begin
 		report "Entering 2, 6, A neither opens the door, nor triggers the alarm, switching daytime to 1 and not pressing 'O' , will not open the door nor trigger the alarm"
 			severity error;
 
-		-- 14
+		-- 13
 		reset    <= '0';
 		day_time <= '0';
 		code     <= x"0";
@@ -141,7 +141,7 @@ begin
 		report "Entering 2, 6, A, 0 neither opens the door, nor triggers the alarm"
 			severity error;
 
-		-- 15
+		-- 14
 		reset    <= '0';
 		day_time <= '0';
 		code     <= x"5";
@@ -150,7 +150,7 @@ begin
 		report "Entering 2, 6, A, 0, 5 opens the door, but doesn't trigger the alarm"
 			severity error;
 
-		-- 16
+		-- 15
 		wait for clk_period;
 		assert door = '0' and alarm = '0'
 		report "Waiting for a clock cycle, should reset both door and alarm, to zero"
