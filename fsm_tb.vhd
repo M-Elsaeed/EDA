@@ -1,36 +1,34 @@
-library ieee;
-use ieee.std_logic_1164.all;
 entity dac_tb is
 end dac_tb;
 
 architecture dac_tb_behav of dac_tb is
 	component dac is
 		port (
-			reset    : in std_logic;
-			day_time : in std_logic;
-			code     : in std_logic_vector(3 downto 0);
-			door     : out std_logic;
-			alarm    : out std_logic;
-			clk      : in std_logic;
-			vdd      : in std_logic;
-			vss      : in std_logic
+			reset    : in bit;
+			day_time : in bit;
+			code     : in bit_vector(3 downto 0);
+			door     : out bit;
+			alarm    : out bit;
+			clk      : in bit;
+			vdd      : in bit;
+			vss      : in bit
 		);
 	end component dac;
-	signal reset        : std_logic;
-	signal day_time     : std_logic;
-	signal code         : std_logic_vector(3 downto 0);
-	signal door         : std_logic;
-	signal alarm        : std_logic;
-	signal clk          : std_logic;
-	signal vdd          : std_logic := '1';
-	signal vss          : std_logic := '0';
+	signal reset        : bit;
+	signal day_time     : bit;
+	signal code         : bit_vector(3 downto 0);
+	signal door         : bit;
+	signal alarm        : bit;
+	signal clk          : bit;
+	signal vdd          : bit := '1';
+	signal vss          : bit := '0';
 
 	for all             : dac use entity work.dac(dac_behav);
 
 	constant clk_period : time                         := 20 ns;
-	constant a          : std_logic_vector(3 downto 0) := "1010";
-	constant b          : std_logic_vector(3 downto 0) := "1011";
-	constant o          : std_logic_vector(3 downto 0) := "1101";
+	constant a          : bit_vector(3 downto 0) := "1010";
+	constant b          : bit_vector(3 downto 0) := "1011";
+	constant o          : bit_vector(3 downto 0) := "1101";
 begin
 
 	dut : dac port map(reset, day_time, code, door, alarm, clk, vdd, vss);

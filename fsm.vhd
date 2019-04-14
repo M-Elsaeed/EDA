@@ -2,27 +2,25 @@
 -- A => 1010
 -- B => 1011
 -- O => 1101
-library ieee;
-use ieee.std_logic_1164.all;
 entity dac is
 	port (
-		reset    : in std_logic;
-		day_time : in std_logic;
-		code     : in std_logic_vector(3 downto 0);
-		door     : out std_logic;
-		alarm    : out std_logic;
-		clk      : in std_logic;
-		vdd      : in std_logic;
-		vss      : in std_logic
+		reset    : in bit;
+		day_time : in bit;
+		code     : in bit_vector(3 downto 0);
+		door     : out bit;
+		alarm    : out bit;
+		clk      : in bit;
+		vdd      : in bit;
+		vss      : in bit
 	);
 end dac;
 architecture dac_behav of dac is
 	type state is (start, rec_2, rec_6, rec_a, rec_0, rec_5);
 	signal current_state : state;
 	signal next_state    : state;
-	constant a           : std_logic_vector(3 downto 0) := "1010";
-	constant b           : std_logic_vector(3 downto 0) := "1011";
-	constant o           : std_logic_vector(3 downto 0) := "1101";
+	constant a           : bit_vector(3 downto 0) := "1010";
+	constant b           : bit_vector(3 downto 0) := "1011";
+	constant o           : bit_vector(3 downto 0) := "1101";
 begin
 	process (clk)
 	begin
