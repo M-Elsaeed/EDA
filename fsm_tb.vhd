@@ -125,12 +125,6 @@ begin
 		report "Entering 2, 6 neither opens the door, nor triggers the alarm"
 			severity error;
 
-		-- 12
-		-- wait for clk_period;
-		-- assert door = '0' and alarm = '0'
-		-- report "Waiting for a clock cycle, should NOT both door nor alarm to zero"
-		-- 	severity error;
-
 		-- 13
 		reset    <= '0';
 		day_time <= '1';
