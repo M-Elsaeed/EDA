@@ -43,7 +43,7 @@ begin
 		wait for clk_period;
 		assert door = '0' and alarm = '0'
 		report "Setting reset = 1 should reset the circuit to its initial state"
-			severity error;
+			severity failure;
 
 		-- 2
 		reset    <= '0';
@@ -52,13 +52,13 @@ begin
 		wait for clk_period;
 		assert door = '0' and alarm = '1'
 		report "Entering a wrong code, should trigger the alarm"
-			severity error;
+			severity failure;
 
 		-- 3
 		wait for clk_period;
 		assert door = '0' and alarm = '0'
 		report "Waiting for a clock cycle, should reset both door and alarm, to zero"
-			severity error;
+			severity failure;
 
 		-- 4
 		reset    <= '0';
@@ -67,13 +67,13 @@ begin
 		wait for clk_period;
 		assert door = '0' and alarm = '1'
 		report "Entering a wrong code, even during daytime should trigger the alarm"
-			severity error;
+			severity failure;
 
 		-- 5
 		wait for clk_period;
 		assert door = '0' and alarm = '0'
 		report "Waiting for a clock cycle, should reset both door and alarm, to zero"
-			severity error;
+			severity failure;
 
 		-- 6
 		reset    <= '0';
@@ -82,13 +82,13 @@ begin
 		wait for clk_period;
 		assert door = '0' and alarm = '1'
 		report "Entering 'O' during night time should trigger the alarm"
-			severity error;
+			severity failure;
 
 		-- 7
 		wait for clk_period;
 		assert door = '0' and alarm = '0'
 		report "Waiting for a clock cycle, should reset both door and alarm, to zero"
-			severity error;
+			severity failure;
 
 		-- 8
 		reset    <= '0';
@@ -97,13 +97,13 @@ begin
 		wait for clk_period;
 		assert door = '1' and alarm = '0'
 		report "Entering 'O' during daytime should open the door"
-			severity error;
+			severity failure;
 
 		-- 9
 		wait for clk_period;
 		assert door = '0' and alarm = '0'
 		report "Waiting for a clock cycle, should reset both door and alarm, to zero"
-			severity error;
+			severity failure;
 
 		-- 10
 		reset    <= '0';
@@ -112,7 +112,7 @@ begin
 		wait for clk_period;
 		assert door = '0' and alarm = '0'
 		report "Entering 2 neither opens the door, nor triggers the alarm"
-			severity error;
+			severity failure;
 
 		-- 11
 		reset    <= '0';
@@ -121,7 +121,7 @@ begin
 		wait for clk_period;
 		assert door = '0' and alarm = '0'
 		report "Entering 2, 6 neither opens the door, nor triggers the alarm"
-			severity error;
+			severity failure;
 
 		-- 12
 		reset    <= '0';
@@ -130,7 +130,7 @@ begin
 		wait for clk_period;
 		assert door = '0' and alarm = '0'
 		report "Entering 2, 6, A neither opens the door, nor triggers the alarm, switching daytime to 1 and not pressing 'O' , will not open the door nor trigger the alarm"
-			severity error;
+			severity failure;
 
 		-- 13
 		reset    <= '0';
@@ -139,7 +139,7 @@ begin
 		wait for clk_period;
 		assert door = '0' and alarm = '0'
 		report "Entering 2, 6, A, 0 neither opens the door, nor triggers the alarm"
-			severity error;
+			severity failure;
 
 		-- 14
 		reset    <= '0';
@@ -148,12 +148,17 @@ begin
 		wait for clk_period;
 		assert door = '1' and alarm = '0'
 		report "Entering 2, 6, A, 0, 5 opens the door, but doesn't trigger the alarm"
-			severity error;
+			severity failure;
 
 		-- 15		
 		wait for clk_period;
 		assert door = '0' and alarm = '0'
 		report "Waiting for a clock cycle, should reset both door and alarm, to zero"
+			severity failure;
+
+
+		assert false
+		report "FSM PASSED ALL TEST SUCCESSFULLY."
 			severity error;
 		wait;
 	end process;
