@@ -5,19 +5,41 @@ all_syf: sdeta.vbe \
 	sdetm.vbe \
 	sdeto.vbe \
 	sdetr.vbe 
-		@echo "<-- Generated"
+		@echo "<-- SYF DONE"
 
 all_boom: sdeta_b.vbe \
 	sdetj_b.vbe \
 	sdetm_b.vbe \
 	sdeto_b.vbe \
-	sdetr_b.vbe \
+	sdetr_b.vbe
 		@echo "<-- BOOM DONE"
+
+sdet_boog : sdeta_b.vst \
+	sdetj_b.vst \
+	sdetm_b.vst \
+	sdeto_b.vst \
+	sdetr_b.vst
+		@echo "<-- BOOG DONE"
+
+sdet_loon : sdeta_b_l.vst \
+	sdetj_b_l.vst \
+	sdetm_b_l.vst \
+	sdeto_b_l.vst \
+	sdetr_b_l.vst
+		@echo "<-- LOON DONE"
 
 #-------Finite State Machine Synthesis-----------------#
 
 vhd_to_fsm:
 	rename .vhd .fsm *.vhd
+
+%.vst : %.vbe paramfile.lax
+	@echo " Logical Synthesis -> $@ "
+	boog -x 1 -l paramfile $* > $*_boog.out
+
+%_l.vst : %.vst paramfile.lax
+	@echo " Netlist Optimization -> $@ "
+	loon -x 1 $* $*_l paramfile > $*_loon.out
 
 %_b.vbe: %.vbe
 	@echo "		Boolean Optimization -> $@"

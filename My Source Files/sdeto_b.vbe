@@ -1,5 +1,5 @@
 -- VHDL data flow description generated from `sdeto_b`
---		date : Mon Apr 22 09:55:22 2019
+--		date : Mon Apr 22 17:27:35 2019
 
 
 -- Entity Declaration
@@ -24,66 +24,68 @@ ARCHITECTURE behaviour_data_flow OF sdeto_b IS
   SIGNAL dac_current_state : REG_VECTOR(5 DOWNTO 0) REGISTER;	-- dac_current_state
   SIGNAL aux0 : BIT;		-- aux0
   SIGNAL aux1 : BIT;		-- aux1
+  SIGNAL aux2 : BIT;		-- aux2
   SIGNAL aux3 : BIT;		-- aux3
+  SIGNAL aux4 : BIT;		-- aux4
+  SIGNAL aux5 : BIT;		-- aux5
   SIGNAL aux6 : BIT;		-- aux6
   SIGNAL aux7 : BIT;		-- aux7
   SIGNAL aux8 : BIT;		-- aux8
-  SIGNAL aux9 : BIT;		-- aux9
-  SIGNAL aux10 : BIT;		-- aux10
-  SIGNAL aux11 : BIT;		-- aux11
-  SIGNAL aux12 : BIT;		-- aux12
 
 BEGIN
-  aux12 <= (aux11 AND dac_current_state(4));
-  aux11 <= (aux8 OR NOT(code(2)));
-  aux10 <= (aux9 AND dac_current_state(5));
-  aux9 <= (aux8 OR code(2));
-  aux8 <= (aux1 OR code(3));
-  aux7 <= (aux6 AND dac_current_state(2));
-  aux6 <= (((code(0) OR code(1)) OR code(3)) OR code(2));
-  aux3 <= ((aux1 OR NOT(code(3))) OR code(2));
-  aux1 <= (code(0) OR NOT(code(1)));
-  aux0 <= (NOT(code(0)) OR code(1));
-  label0 : BLOCK ((NOT((clk'STABLE)) AND clk) = '1')
+  aux8 <= (NOT(reset) AND code(1));
+  aux7 <= (dac_current_state(5) OR dac_current_state(3));
+  aux6 <= (dac_current_state(1) OR code(3));
+  aux5 <= (dac_current_state(4) OR code(2));
+  aux4 <= NOT(NOT(aux2) OR NOT(code(3)));
+  aux3 <= NOT(NOT(aux2) OR code(3));
+  aux2 <= NOT(code(0) OR code(2));
+  aux1 <= (dac_current_state(4) OR dac_current_state(1));
+  aux0 <= (NOT(code(0)) OR NOT(code(2)));
+  label0 : BLOCK ((clk AND NOT((clk'STABLE))) = '1')
   BEGIN
-    dac_current_state (0) <= GUARDED (((aux3 AND dac_current_state(3)) OR aux12 OR 
-aux10 OR aux7 OR dac_current_state(1)) AND NOT(reset));
+    dac_current_state (0) <= GUARDED (((NOT(aux3) OR code(1)) AND NOT(reset) AND 
+dac_current_state(2)) OR ((((aux5 OR code(3)) AND 
+dac_current_state(5)) OR (aux5 AND code(3)) OR code(0) OR 
+dac_current_state(1) OR (NOT(code(3)) AND dac_current_state(3)) OR (
+NOT(code(2)) AND NOT(aux7)) OR NOT(code(1))) AND (
+aux1 OR aux7) AND NOT(reset)));
   END BLOCK label0;
-  label1 : BLOCK ((NOT((clk'STABLE)) AND clk) = '1')
+  label1 : BLOCK ((clk AND NOT((clk'STABLE))) = '1')
   BEGIN
-    dac_current_state (1) <= GUARDED (NOT(aux6) AND dac_current_state(2) AND NOT(reset
-));
+    dac_current_state (1) <= GUARDED (aux3 AND NOT(reset) AND NOT(code(1)) AND 
+dac_current_state(2));
   END BLOCK label1;
-  label2 : BLOCK ((NOT((clk'STABLE)) AND clk) = '1')
+  label2 : BLOCK ((clk AND NOT((clk'STABLE))) = '1')
   BEGIN
-    dac_current_state (2) <= GUARDED (NOT(aux3) AND dac_current_state(3) AND NOT(reset
-));
+    dac_current_state (2) <= GUARDED (aux4 AND dac_current_state(3) AND aux8);
   END BLOCK label2;
-  label3 : BLOCK ((NOT((clk'STABLE)) AND clk) = '1')
+  label3 : BLOCK ((clk AND NOT((clk'STABLE))) = '1')
   BEGIN
-    dac_current_state (3) <= GUARDED (NOT(aux11) AND dac_current_state(4) AND NOT(
-reset));
+    dac_current_state (3) <= GUARDED (NOT(code(0)) AND dac_current_state(4) AND 
+code(2) AND NOT(code(3)) AND aux8);
   END BLOCK label3;
-  label4 : BLOCK ((NOT((clk'STABLE)) AND clk) = '1')
+  label4 : BLOCK ((clk AND NOT((clk'STABLE))) = '1')
   BEGIN
-    dac_current_state (4) <= GUARDED (NOT(aux9) AND dac_current_state(5) AND NOT(reset
-));
+    dac_current_state (4) <= GUARDED (aux3 AND dac_current_state(5) AND aux8);
   END BLOCK label4;
-  label5 : BLOCK ((NOT((clk'STABLE)) AND clk) = '1')
+  label5 : BLOCK ((clk AND NOT((clk'STABLE))) = '1')
   BEGIN
-    dac_current_state (5) <= GUARDED (dac_current_state(0) OR reset);
+    dac_current_state (5) <= GUARDED (reset OR dac_current_state(0));
   END BLOCK label5;
 
-alarm <= ((aux12 OR aux10 OR aux7 OR ((aux0 OR code(3) OR 
-NOT(code(2))) AND dac_current_state(1)) OR 
-dac_current_state(3)) AND (aux3 OR dac_current_state(1) OR 
-dac_current_state(2) OR dac_current_state(5) OR dac_current_state(4))
- AND (aux0 OR NOT(day_time) OR NOT(code(3)) OR NOT
-(code(2))) AND NOT(reset));
+alarm <= (((((NOT(aux4) AND dac_current_state(3)) OR (NOT(
+aux3) AND dac_current_state(5)) OR ((code(0) OR NOT(
+code(2)) OR aux6) AND aux1)) AND code(1)) OR (((
+dac_current_state(1) AND code(3)) OR (aux0 AND dac_current_state(1)) 
+OR dac_current_state(4) OR aux7) AND NOT(code(1))) 
+OR dac_current_state(2)) AND (((aux0 OR NOT(code(3)
+) OR NOT(day_time)) AND (code(0) OR 
+dac_current_state(4) OR code(2) OR dac_current_state(1) OR code(3) OR
+ aux7)) OR code(1)) AND NOT(reset));
 
-door <= ((dac_current_state(1) OR dac_current_state(2) OR
- dac_current_state(5) OR dac_current_state(4) OR 
-dac_current_state(3)) AND (code(3) OR dac_current_state(1)) AND NOT(
-aux0) AND (day_time OR NOT(code(3))) AND code(2) AND 
-NOT(reset));
+door <= ((aux1 OR NOT(code(3)) OR dac_current_state(5) OR
+ dac_current_state(3) OR NOT(day_time) OR 
+dac_current_state(2)) AND (NOT(code(3)) OR day_time) AND NOT(aux0) 
+AND aux6 AND NOT(reset) AND NOT(code(1)));
 END;
