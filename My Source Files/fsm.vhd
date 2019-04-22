@@ -112,9 +112,8 @@ begin
 					alarm      <= '0';
 					next_state <= start;
 				when others =>
-					assert false
-					report "Invalid state"
-						severity failure;
+					assert ('1')
+					report "Invalid state";
 			end case;
 		end if;
 	end process;
