@@ -33,6 +33,10 @@ sdet_loon : sdeta_b_l.vst \
 vhd_to_fsm:
 	rename .vhd .fsm *.vhd
 
+%_scan.vst : %.vst scan.path
+	@echo " scan-path insertion -> $@ "
+	scapin -VRB $* scan $*_scan > scapin.out
+
 %_b_l_net.vbe : %_b_l.vst %.vbe
 	@echo " Formal checking -> $@ "
 	flatbeh $*_b_l $*_b_l_net > $*_flatbeh.out
