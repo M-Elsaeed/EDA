@@ -33,6 +33,11 @@ sdet_loon : sdeta_b_l.vst \
 vhd_to_fsm:
 	rename .vhd .fsm *.vhd
 
+%_b_l_net.vbe : %_b_l.vst %.vbe
+	@echo " Formal checking -> $@ "
+	flatbeh $*_b_l $*_b_l_net > $*_flatbeh.out
+	proof -d $* $*_b_l_net > $*_proof.out
+
 %.vst : %.vbe paramfile.lax
 	@echo " Logical Synthesis -> $@ "
 	boog -x 1 -l paramfile $* > $*_boog.out
