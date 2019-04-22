@@ -1,0 +1,112 @@
+-- VHDL data flow description generated from `sdetj`
+--		date : Mon Apr 22 09:55:20 2019
+
+
+-- Entity Declaration
+
+ENTITY sdetj IS
+  PORT (
+  reset : in BIT;	-- reset
+  day_time : in BIT;	-- day_time
+  code : in bit_vector(3 DOWNTO 0) ;	-- code
+  door : out BIT;	-- door
+  alarm : out BIT;	-- alarm
+  clk : in BIT;	-- clk
+  vdd : in BIT;	-- vdd
+  vss : in BIT	-- vss
+  );
+END sdetj;
+
+
+-- Architecture Declaration
+
+ARCHITECTURE VBE OF sdetj IS
+  SIGNAL dac_current_state : REG_VECTOR(2 DOWNTO 0) REGISTER;	-- dac_current_state
+  SIGNAL dac_current_state_rec_5 : BIT;		-- dac_current_state_rec_5
+  SIGNAL dac_next_state_rec_5 : BIT;		-- dac_next_state_rec_5
+  SIGNAL dac_current_state_rec_0 : BIT;		-- dac_current_state_rec_0
+  SIGNAL dac_next_state_rec_0 : BIT;		-- dac_next_state_rec_0
+  SIGNAL dac_current_state_rec_a : BIT;		-- dac_current_state_rec_a
+  SIGNAL dac_next_state_rec_a : BIT;		-- dac_next_state_rec_a
+  SIGNAL dac_current_state_rec_6 : BIT;		-- dac_current_state_rec_6
+  SIGNAL dac_next_state_rec_6 : BIT;		-- dac_next_state_rec_6
+  SIGNAL dac_current_state_rec_2 : BIT;		-- dac_current_state_rec_2
+  SIGNAL dac_next_state_rec_2 : BIT;		-- dac_next_state_rec_2
+  SIGNAL dac_current_state_start : BIT;		-- dac_current_state_start
+  SIGNAL dac_next_state_start : BIT;		-- dac_next_state_start
+  SIGNAL dac_next_state : BIT_VECTOR(2 DOWNTO 0);	-- dac_next_state
+
+BEGIN
+  dac_next_state(0) <= (dac_next_state_start OR dac_next_state_rec_a);
+  dac_next_state(1) <= (dac_next_state_start OR dac_next_state_rec_2 OR 
+dac_next_state_rec_5);
+  dac_next_state(2) <= (dac_next_state_rec_0 OR dac_next_state_rec_5);
+  dac_next_state_start <= dac_current_state_rec_5;
+  dac_current_state_start <= (dac_current_state(1) AND dac_current_state(0));
+  dac_next_state_rec_2 <= (dac_current_state_start AND NOT(code(0)) AND 
+code(1) AND NOT(code(2)) AND NOT(code(3)));
+  dac_current_state_rec_2 <= (NOT(dac_current_state(2)) AND 
+dac_current_state(1) AND NOT(dac_current_state(0)));
+  dac_next_state_rec_6 <= (dac_current_state_rec_2 AND NOT(code(0)) AND 
+code(1) AND code(2) AND NOT(code(3)));
+  dac_current_state_rec_6 <= (NOT(dac_current_state(2)) AND NOT(
+dac_current_state(1)) AND NOT(dac_current_state(0)));
+  dac_next_state_rec_a <= (dac_current_state_rec_6 AND NOT(code(0)) AND 
+code(1) AND NOT(code(2)) AND code(3));
+  dac_current_state_rec_a <= (NOT(dac_current_state(1)) AND 
+dac_current_state(0));
+  dac_next_state_rec_0 <= (dac_current_state_rec_a AND NOT(code(0)) AND NOT
+(code(1)) AND NOT(code(2)) AND NOT(code(3)));
+  dac_current_state_rec_0 <= (dac_current_state(2) AND NOT(
+dac_current_state(1)));
+  dac_next_state_rec_5 <= (dac_current_state_rec_0 OR (
+dac_current_state_rec_2 AND (code(0) OR NOT(code(1)) OR NOT(code(2)) OR 
+code(3))) OR (dac_current_state_rec_6 AND (code(0) OR 
+NOT(code(1)) OR code(2) OR NOT(code(3)))) OR (
+dac_current_state_rec_a AND (code(0) OR code(1) OR code(2) OR code(3))) 
+OR (dac_current_state_start AND (code(0) OR NOT(
+code(1)) OR code(2) OR code(3))));
+  dac_current_state_rec_5 <= (dac_current_state(2) AND dac_current_state(1));
+  label0 : BLOCK ((NOT((clk'STABLE)) AND clk) = '1')
+  BEGIN
+    dac_current_state(0) <= GUARDED (dac_next_state(0) OR reset);
+  END BLOCK label0;
+  label1 : BLOCK ((NOT((clk'STABLE)) AND clk) = '1')
+  BEGIN
+    dac_current_state(1) <= GUARDED (dac_next_state(1) OR reset);
+  END BLOCK label1;
+  label2 : BLOCK ((NOT((clk'STABLE)) AND clk) = '1')
+  BEGIN
+    dac_current_state(2) <= GUARDED (dac_next_state(2) AND NOT(reset));
+  END BLOCK label2;
+
+alarm <= ((dac_current_state_start AND (((code(0) OR NOT(
+code(1)) OR code(2)) AND NOT(code(3))) OR ((NOT(code(0))
+ OR code(1) OR NOT(code(2)) OR NOT(day_time)) AND 
+code(3))) AND NOT(reset)) OR (dac_current_state_rec_2 
+AND (((code(0) OR NOT(code(1)) OR NOT(code(2))) AND 
+NOT(code(3))) OR ((NOT(code(0)) OR code(1) OR NOT(
+code(2)) OR NOT(day_time)) AND code(3))) AND NOT(reset))
+ OR (dac_current_state_rec_6 AND (((code(0) OR NOT
+(code(1)) OR code(2)) AND NOT(day_time)) OR ((
+code(0) OR NOT(code(1))) AND NOT(code(2))) OR ((NOT(
+code(0)) OR code(1)) AND code(2)) OR NOT(code(3))) AND 
+NOT(reset)) OR (dac_current_state_rec_a AND (((
+code(0) OR code(1) OR code(2)) AND NOT(code(3))) OR ((
+NOT(code(0)) OR code(1) OR NOT(code(2)) OR NOT(
+day_time)) AND code(3))) AND NOT(reset)) OR (
+dac_current_state_rec_0 AND (NOT(code(0)) OR code(1) OR NOT(code(2)) OR 
+(NOT(day_time) AND code(3))) AND NOT(reset)));
+
+door <= ((dac_current_state_start AND code(0) AND NOT(
+code(1)) AND code(2) AND day_time AND code(3) AND NOT(
+reset)) OR (dac_current_state_rec_2 AND code(0) AND 
+NOT(code(1)) AND code(2) AND day_time AND code(3) 
+AND NOT(reset)) OR (dac_current_state_rec_6 AND 
+code(0) AND NOT(code(1)) AND code(2) AND day_time AND 
+code(3) AND NOT(reset)) OR (dac_current_state_rec_a AND 
+code(0) AND NOT(code(1)) AND code(2) AND day_time AND 
+code(3) AND NOT(reset)) OR (dac_current_state_rec_0 AND 
+code(0) AND NOT(code(1)) AND code(2) AND NOT(NOT(
+day_time) AND code(3)) AND NOT(reset)));
+END;
