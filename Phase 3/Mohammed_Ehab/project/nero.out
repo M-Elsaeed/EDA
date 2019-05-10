@@ -1,0 +1,133 @@
+
+                   @@@    @@@           @@@@@@@              
+                    @@     @              @@   @@            
+                    @@@    @              @@    @@           
+                    @ @@   @    @@@@@     @@    @@     @@@   
+                    @ @@   @   @     @    @@   @@    @@   @@ 
+                    @  @@  @  @@     @@   @@@@@     @@     @@
+                    @   @@ @  @@@@@@@@@   @@  @@    @@     @@
+                    @   @@ @  @@          @@   @@   @@     @@
+                    @    @@@  @@      @   @@   @@   @@     @@
+                    @     @@   @@    @@   @@    @@   @@   @@ 
+                   @@@    @@     @@@@   @@@@@   @@@    @@@   
+
+                               Negotiating Router
+
+                   Alliance CAD System 5.0 20090901,  nero 5.0
+                   Copyright (c) 2002-2019,     ASIM/LIP6/UPMC
+                   E-mail        : alliance-users@asim.lip6.fr
+
+                                S/N 20080611.1
+
+
+  o  MBK environment :
+
+     MBK_IN_LO       := vst
+     MBK_OUT_LO      := vst
+     MBK_IN_PH       := ap
+     MBK_OUT_PH      := ap
+     MBK_WORK_LIB    := .
+     MBK_CATA_LIB    := .
+                        /usr/lib64/alliance/cells/sxlib
+                        /usr/lib64/alliance/cells/dp_sxlib
+                        /usr/lib64/alliance/cells/rflib
+                        /usr/lib64/alliance/cells/rf2lib
+                        /usr/lib64/alliance/cells/ramlib
+                        /usr/lib64/alliance/cells/romlib
+                        /usr/lib64/alliance/cells/pxlib
+                        /usr/lib64/alliance/cells/padlib
+     MBK_CATAL_NAME  := CATAL
+     MBK_VDD         := vdd
+     MBK_VSS         := vss
+     MBK_SEPAR       := .
+
+  o  Loading netlist "sdetm_b_l_scan"...
+  o  Loading layout "sdet_p"...
+  o  Flattening layout...
+  o  Flattening netlist...
+  o  Building netlist dual representation (lofigchain)...
+  o  Binding logical & physical views...
+
+  o  Loading design into grid...
+     o  Using seed cell "a2_x2_2_ins" (model "a2_x2").
+     o  Grid offset : (0,0) [adjust (0,0)]
+     o  Small design, global routing disabled.
+     o  Allocating grid size [62,61,3].
+     o  Loading external terminals.
+     o  Finding obstacles.
+     o  Loading nets into grid.
+     o  Allocating the net scheduler.
+     o  Reading power grid.
+
+  o  Local routing stage.
+     - [  59] (hp :=     0) "vdd"
+     - [  58] (hp :=     0) "vss"
+     - [  57] (hp :=     7) "alarm"
+     - [  56] (hp :=     9) "na3_x1_2_sig"
+     - [  55] (hp :=    10) "o2_x2_4_sig"
+     - [  54] (hp :=    10) "inv_x2_sig"
+     - [  53] (hp :=    11) "scanin"
+     - [  52] (hp :=    11) "na2_x1_2_sig"
+     - [  51] (hp :=    12) "scanout"
+     - [  50] (hp :=    12) "oa22_x2_sig"
+     - [  49] (hp :=    12) "not_aux2"
+     - [  48] (hp :=    13) "no3_x1_sig"
+     - [  47] (hp :=    13) "o3_x2_sig"
+     - [  46] (hp :=    14) "nao22_x1_3_sig"
+     - [  45] (hp :=    15) "o2_x2_sig"
+     - [  44] (hp :=    15) "nao22_x1_2_sig"
+     - [  43] (hp :=    17) "no3_x1_2_sig"
+     - [  42] (hp :=    17) "no2_x1_2_sig"
+     - [  41] (hp :=    17) "aux7"
+     - [  40] (hp :=    20) "o3_x2_2_sig"
+     - [  39] (hp :=    21) "nao22_x1_sig"
+     - [  38] (hp :=    22) "o2_x2_2_sig"
+     - [  37] (hp :=    22) "not_aux9"
+     - [  36] (hp :=    23) "na3_x1_3_sig"
+     - [  35] (hp :=    26) "noa22_x1_sig"
+     - [  34] (hp :=    28) "door"
+     - [  33] (hp :=    28) "a2_x2_2_sig"
+     - [  32] (hp :=    28) "not_aux11"
+     - [  31] (hp :=    30) "o4_x2_sig"
+     - [  30] (hp :=    31) "o4_x2_2_sig"
+     - [  29] (hp :=    32) "not_aux8"
+     - [  28] (hp :=    34) "no2_x1_sig"
+     - [  27] (hp :=    35) "noa22_x1_2_sig"
+     - [  26] (hp :=    35) "not_aux3"
+     - [  25] (hp :=    37) "day_time"
+     - [  24] (hp :=    38) "not_code 1"
+     - [  23] (hp :=    39) "a2_x2_sig"
+     - [  22] (hp :=    40) "not_code 0"
+     - [  21] (hp :=    41) "clk"
+     - [  20] (hp :=    42) "na3_x1_sig"
+     - [  19] (hp :=    43) "ao22_x2_sig"
+     - [  18] (hp :=    44) "not_aux1"
+     - [  17] (hp :=    45) "not_dac_current_state 1"
+     - [  16] (hp :=    46) "na4_x1_sig"
+     - [  15] (hp :=    46) "not_aux10"
+     - [  14] (hp :=    49) "o2_x2_3_sig"
+     - [  13] (hp :=    55) "not_dac_current_state 2"
+     - [  12] (hp :=    57) "na2_x1_sig"
+     - [  11] (hp :=    59) "code 0"
+     - [  10] (hp :=    60) "reset"
+     - [   9] (hp :=    61) "code 3"
+     - [   8] (hp :=    61) "not_code 2"
+     - [   7] (hp :=    68) "dac_current_state 1"
+     - [   6] (hp :=    78) "code 2"
+     - [   5] (hp :=    81) "test"
+     - [   4] (hp :=    82) "not_code 3"
+     - [   3] (hp :=    89) "not_aux0"
+     - [   2] (hp :=    96) "dac_current_state 2"
+     - [   1] (hp :=    98) "code 1"
+     - [   0] (hp :=   100) "dac_current_state 0"
+
+  o  Routing stats :
+     - routing iterations    := 47730
+     - re-routing iterations := 0
+     - ratio                 := 0%.
+
+  o  Dumping routing grid.
+  o  Saving MBK figure "sdetm_b_l_scan".
+  o  Saving layout as "sdetm_b_l_scan"...
+
+
